@@ -1,0 +1,90 @@
+import random
+
+
+class Vinyl:
+    def __init__(self, title, artist):
+        self.title = title
+        self.artist = artist
+
+
+def start(name):
+    # Use a breakpoint in the code line below to debug your script.
+    v1 = Vinyl("(What's the Story) Morning Glory?", 'Oasis')
+    v2 = Vinyl("Be here now", 'Oasis')
+    v3 = Vinyl("Definitely Maybe", 'Oasis')
+    v4 = Vinyl("Left of the Middle", 'Natalie Imbruglia')
+    v5 = Vinyl("Distance", 'Utada Hikaru')
+    v6 = Vinyl("First Love", 'Utada Hikaru')
+    v7 = Vinyl("Fantôme", 'Utada Hikaru')
+    v8 = Vinyl("Ultra Blue", 'Utada Hikaru')
+
+    records = [v1, v2, v3, v4, v5, v6, v7, v8]
+    random.shuffle(records)
+
+    size = len(records)
+    i = 0
+
+    records2 = []
+    old_records = list(records)
+
+    current_item = Vinyl('','')
+
+    while i < size:
+        list_size = len(records)
+        if i == 0:
+            random_integer = random.randint(1, list_size) - 1
+            item = records[random_integer]
+            current_item = item
+
+            records.remove(item)
+            records2.append(item)
+        else:
+            random_integer = random.randint(1, list_size) - 1
+            item = records[random_integer]
+
+            # check whether the list have only one artist left or not
+            if is_one_artist(records):
+                current_item = item
+                records.remove(item)
+                records2.append(item)
+            else:
+                dup = True
+                while dup:
+                    if current_item.artist == item.artist:
+                        dup = True
+                        random_integer = random.randint(1, list_size) - 1
+                        item = records[random_integer]
+                    else:
+                        dup = False
+                        current_item = item
+                        records.remove(item)
+                        records2.append(item)
+
+        i = i + 1
+
+
+    print('input:')
+    for v in old_records:
+        print(v.artist,'-', v.title)
+
+    print('output:')
+    for v in records2:
+        print(v.artist,'-', v.title)
+
+def is_one_artist(vinyls):
+    artist_list = []
+    for v in vinyls:
+        artist_list.append(v.artist)
+
+    if len(artist_list) == 0:
+        return False
+    else:
+        if len(list(set(artist_list))) <= 1:
+            return True
+        else:
+            return False
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    start('PyCharm')
