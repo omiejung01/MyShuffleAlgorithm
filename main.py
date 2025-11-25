@@ -2,24 +2,26 @@ import random
 
 
 class Vinyl:
-    def __init__(self, title, artist):
+    def __init__(self, title, artist, ts):
         self.title = title
         self.artist = artist
+        self.ts = ts
 
 
 def start(name):
     # Use a breakpoint in the code line below to debug your script.
-    v1 = Vinyl("(What's the Story) Morning Glory?", 'Oasis')
-    v2 = Vinyl("Be here now", 'Oasis')
-    v3 = Vinyl("Definitely Maybe", 'Oasis')
-    v4 = Vinyl("Left of the Middle", 'Natalie Imbruglia')
-    v5 = Vinyl("Distance", 'Utada Hikaru')
-    v6 = Vinyl("First Love", 'Utada Hikaru')
-    v7 = Vinyl("Fantôme", 'Utada Hikaru')
-    v8 = Vinyl("Ultra Blue", 'Utada Hikaru')
+    v1 = Vinyl("(What's the Story) Morning Glory?", 'Oasis', 40)
+    v2 = Vinyl("Be here now", 'Oasis', 2 )
+    v3 = Vinyl("Definitely Maybe", 'Oasis', 3)
+    v4 = Vinyl("Left of the Middle", 'Natalie Imbruglia', 20)
+    v5 = Vinyl("Distance", 'Utada Hikaru', 5)
+    v6 = Vinyl("First Love", 'Utada Hikaru', 4)
+    v7 = Vinyl("Fantôme", 'Utada Hikaru', 1)
+    v8 = Vinyl("Ultra Blue", 'Utada Hikaru', 10)
 
     records = [v1, v2, v3, v4, v5, v6, v7, v8]
-    random.shuffle(records)
+    random.shuffle(records) # Change this line
+    
 
     size = len(records)
     i = 0
