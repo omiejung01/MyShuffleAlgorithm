@@ -21,15 +21,27 @@ def start(name):
 
     records = [v1, v2, v3, v4, v5, v6, v7, v8]
     random.shuffle(records) # Change this line
-    
 
-    size = len(records)
-    i = 0
+    max_ts = 0
+
+    for v in records:
+        if max_ts < v.ts:
+            max_ts = v.ts
+
+    pool = []
+    for v in records:
+        for i in range(max_ts - v.ts + 1):
+            pool.append(v)
+
+    #Select from pool
 
     records2 = []
     old_records = list(records)
 
-    current_item = Vinyl('','')
+    size = len(records)
+    i = 0
+
+    current_item = Vinyl('','',10)
 
     while i < size:
         list_size = len(records)
@@ -64,6 +76,44 @@ def start(name):
 
         i = i + 1
 
+    records3 = []
+    current_item2 = Vinyl('', '', 10)
+
+    j = 0
+    while len(records3) < size:
+        pool_size = len(pool)
+        print('pool size:' + str(pool_size))
+        if j == 0:
+            random_integer = random.randint(1, pool_size) - 1
+            item = pool[random_integer]
+
+            records3.append(item)
+            pool = remove_all(pool, item)
+
+            current_item2 = item
+        else:
+            random_integer = random.randint(1, pool_size) - 1
+            item = pool[random_integer]
+
+            if is_one_artist(pool):
+                records3.append(item)
+                pool = remove_all(pool, item)
+
+                current_item2 = item
+            else:
+                dup = True
+                while dup:
+                    if current_item2.artist == item.artist:
+                        dup = True
+                        random_integer = random.randint(1, pool_size) - 1
+                        item = pool[random_integer]
+                    else:
+                        dup = False
+                        current_item2 = item
+
+                        records3.append(item)
+                        pool = remove_all(pool, item)
+        j = j + 1
 
     print('input:')
     for v in old_records:
@@ -71,6 +121,14 @@ def start(name):
 
     print('output:')
     for v in records2:
+        print(v.artist,'-', v.title)
+
+    #print('pool:')
+    #for v in pool:
+    #    print(v.artist,'-', v.title)
+
+    print('records3:')
+    for v in records3:
         print(v.artist,'-', v.title)
 
 def is_one_artist(vinyls):
@@ -85,6 +143,21 @@ def is_one_artist(vinyls):
             return True
         else:
             return False
+
+
+def remove_all(my_list, element):
+    new_list = []
+    for e in my_list:
+        if e != element:
+            new_list.append(e)
+
+    return new_list
+
+def remove_items(test_list, item):
+
+    # using list comprehension to perform the task
+    res = [i for i in test_list if i != item]
+    return res
 
 
 # Press the green button in the gutter to run the script.
